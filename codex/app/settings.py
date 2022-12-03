@@ -7,3 +7,5 @@ load_dotenv(find_dotenv())
 
 OPENAI_API_KEY=os.getenv('OPENAI_API_KEY')
 BOT_API_KEY=os.getenv('BOT_API_KEY')
+
+MAX_LETTERS = 5000
