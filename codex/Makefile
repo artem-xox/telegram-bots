@@ -9,7 +9,4 @@ docker-build:
 	docker build -t ${IMAGE} .
 
 docker-run: docker-build
-	docker run -it --rm \
-		--env-file .env \
-		--name ${IMAGE}-container \
-		${IMAGE}
+	docker run --rm --env-file .env --name ${IMAGE}-container ${IMAGE}

@@ -1,0 +1,14 @@
+[Unit]
+Description=codex
+After=sysinit.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=no
+RemainAfterExit=yes
+User=root
+ExecStart=/home/artem/server/telegram-bots/launch/codex.sh
+
+[Install]
+WantedBy=multi-user.target
