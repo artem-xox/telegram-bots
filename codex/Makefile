@@ -1,5 +1,5 @@
 # variables
-IMAGE = codex-bot
+IMAGE=codex-bot
 
 debug:
 	poetry run python3 app/bot.py

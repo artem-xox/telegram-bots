@@ -8,7 +8,7 @@ Type=simple
 Restart=no
 RemainAfterExit=yes
 User=root
-ExecStart=/home/artem/server/telegram-bots/launch/codex.sh
+ExecStart=/home/artem/server/telegram-bots/launch/bots.sh
 
 [Install]
 WantedBy=multi-user.target
