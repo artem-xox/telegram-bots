@@ -14,7 +14,7 @@ openai.api_key = settings.OPENAI_API_KEY
 
 
 @bot.message_handler(func=lambda message: True)
-def get_dalee(message):
+def get_dalle(message):
     
     try:
 

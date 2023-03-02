@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "codebot"
+name = "dalle"
 version = "0.1.0"
 description = ""
 authors = ["Artem Khokhlov <god.bless.data.science@gmail.com>"]

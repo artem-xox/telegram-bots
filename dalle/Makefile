@@ -1,5 +1,5 @@
 # variables
-IMAGE=dalee-bot
+IMAGE=dalle-bot
 
 debug:
 	poetry run python3 app/bot.py
