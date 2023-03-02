@@ -11,6 +11,8 @@ openai = "^0.27.0"
 pytelegrambotapi = "^4.8.0"
 python-dotenv = "^0.21.0"
 
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
 
 [build-system]
 requires = ["poetry-core"]
