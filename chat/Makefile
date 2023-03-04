@@ -2,7 +2,7 @@
 IMAGE=chat-bot
 
 debug:
-	poetry run python3 app/bot.py
+	poetry run python3 -m app.bot
 
 test:
 	pytest .

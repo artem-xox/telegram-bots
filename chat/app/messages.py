@@ -10,7 +10,7 @@
 from dataclasses import dataclass, field
 from typing import List, Dict
 
-from content.prompts import StylePrompt, DefaultStyle
+from app.content.prompts import StylePrompt, DefaultStyle
 
 
 class Role:

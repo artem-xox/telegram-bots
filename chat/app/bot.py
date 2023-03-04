@@ -4,11 +4,11 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import openai
 
-from cache import SimpleCache
-from content.responses import Reply, print_error
-from content.prompts import DefaultStyle, SimpleStyle
-from messages import Chat, Message, Role
-import settings
+from app.cache import SimpleCache
+from app.content.responses import Reply, print_error
+from app.content.prompts import DefaultStyle, SimpleStyle
+from app.messages import Chat, Message, Role
+from app import settings
 
 
 logger = telebot.logger

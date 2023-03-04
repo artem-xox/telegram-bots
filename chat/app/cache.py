@@ -1,7 +1,7 @@
 from cachetools import MRUCache
 from typing import Optional
 
-from messages import Chat
+from app.messages import Chat
 
 
 class BaseCache:
