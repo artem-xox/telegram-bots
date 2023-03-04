@@ -1,4 +1,13 @@
-from cachetools import MRUCache
+from cachetools import MRUCache, LFUCache, LRUCache
 
 
-cache_messages = MRUCache(maxsize=10)
+class SimpleCache:
+
+    def __init__(self) -> None:
+        cache = MRUCache(maxsize=1_000)
+    
+    def get(self, key):
+        return self.cache.get(key)
+
+    def set(self, key, value):
+        self.cache.set(key, value)
