@@ -10,6 +10,9 @@ class Reply:
     clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
     empty_dialog = f'{Emoji.check} Your have no active dialog {Emoji.check}'
 
+    set_style_default = f'{Emoji.check} Default assistant style {Emoji.check}'
+    set_style_simple = f'{Emoji.check} Simple assistant style {Emoji.check}'
+
 
 def print_error(text_error: str) -> str:
     return f'{Emoji.red_cross} Error: {text_error} {Emoji.red_cross}'

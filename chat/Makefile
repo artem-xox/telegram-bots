@@ -4,6 +4,9 @@ IMAGE=chat-bot
 debug:
 	poetry run python3 app/bot.py
 
+test:
+	pytest .
+
 # docker
 docker-build:
 	docker build -t ${IMAGE} .
