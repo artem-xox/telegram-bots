@@ -10,7 +10,7 @@
 from dataclasses import dataclass, field
 from typing import List, Dict
 
-from app.content.prompts import StylePrompt, DefaultStyle
+from app.content.prompts import Prompt, DefaultPrompt
 
 
 class Role:
@@ -31,7 +31,7 @@ class Message:
 @dataclass
 class Chat:
     messages: List[Message] = field(init=False, default_factory=list)
-    style: StylePrompt = field(default=DefaultStyle)
+    prompt: Prompt = field(default=DefaultPrompt)
         
     def add(self, message: Message):
         self.messages.append(message)
@@ -39,10 +39,10 @@ class Chat:
     def clean(self):
         self.messages = []
     
-    def set_style(self, style: StylePrompt):
-        self.style = style
+    def set_prompt(self, prompt: Prompt):
+        self.prompt = prompt
         self.clean()
-        self.messages.append(Message(role=Role.SYSTEM, text=style.text))
+        self.messages.append(Message(role=Role.SYSTEM, text=prompt.text))
 
     @property
     def list(self) -> List[Dict]:
@@ -51,10 +51,10 @@ class Chat:
     @property
     def status(self) -> Dict:
         return dict(
-            style=self.style.name, 
+            prompt=self.prompt.name, 
             messages=len(self.messages) - 1, 
             first=self.messages[1].text if len(self.messages) > 1 else "")
     
     def __post_init__(self):
-        # setting default conversation style
-        self.messages.append(Message(role=Role.SYSTEM, text=self.style.text))
+        # setting default conversation prompt
+        self.messages.append(Message(role=Role.SYSTEM, text=self.prompt.text))

@@ -1,17 +1,11 @@
 from app.messages import Chat, Message, Role
-from app.content.prompts import SimpleStyle
 
 
 def test_empty_chat():
     
     history = Chat()
     assert history.status['messages'] == 0
-    assert history.status['style'] == 'default'
-
-    history = Chat()
-    history.set_style(SimpleStyle)
-    assert history.status['messages'] == 0
-    assert history.status['style'] == 'simple'
+    assert history.status['prompt'] == 'prompt_default'
 
 
 def test_chat():
@@ -26,4 +20,4 @@ def test_chat():
     assert history.list[1:] == [{"role": "user", "content": "HELLO"}, {"role": "assistant", "content": "THERE"}]
     assert history.status['messages'] == 2
     assert history.status['first'] == init_message
-    assert history.status['style'] == 'default'
+    assert history.status['prompt'] == 'prompt_default'

@@ -7,11 +7,9 @@ class Emoji:
 
 class Reply:
     help = f'{Emoji.cross} There is no help, lol {Emoji.cross}'
+    prompt = 'Choose one of available system prompts:'
     clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
     empty_dialog = f'{Emoji.check} Your have no active dialog {Emoji.check}'
-
-    set_style_default = f'{Emoji.check} Default assistant style {Emoji.check}'
-    set_style_simple = f'{Emoji.check} Simple assistant style {Emoji.check}'
 
 
 def print_error(text_error: str) -> str:

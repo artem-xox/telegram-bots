@@ -1,12 +1,11 @@
 import logging
 
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 import openai
 
 from app.cache import SimpleCache
 from app.content.responses import Reply, print_error
-from app.content.prompts import DefaultStyle, SimpleStyle
+from app.content.prompts import PromptsMap, prompt_markup
 from app.messages import Chat, Message, Role
 from app import settings
 
@@ -44,18 +43,9 @@ def clear(message):
         bot.send_message(message.chat.id, text=Reply.empty_dialog)
 
 
-def style_markup():
-    markup = InlineKeyboardMarkup()
-    markup.row_width = 2
-    markup.add(
-        InlineKeyboardButton("Default", callback_data="default_style"),
-        InlineKeyboardButton("Simple", callback_data="simple_style"))
-    return markup
-
-
-@bot.message_handler(commands=['style'])
-def style(message):
-    bot.send_message(message.chat.id, "What style of conversation do you prefer?", reply_markup=style_markup())
+@bot.message_handler(commands=['prompt'])
+def prompt(message):
+    bot.send_message(message.chat.id, Reply.prompt, reply_markup=prompt_markup())
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -65,12 +55,9 @@ def callback_query(call):
     if history is None:
         history = Chat()
     
-    if call.data == "default_style":
-        bot.send_message(call.message.chat.id, Reply.set_style_default)
-        history.set_style(DefaultStyle)
-    elif call.data == "simple_style":
-        history.set_style(SimpleStyle)
-        bot.send_message(call.message.chat.id, Reply.set_style_simple)
+    prompt = PromptsMap[call.data]
+    bot.send_message(call.message.chat.id, prompt.message)
+    history.set_prompt(prompt)
     
     cache.set(call.message.chat.id, history)
 
