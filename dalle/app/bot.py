@@ -1,6 +1,7 @@
 import logging
 
 import telebot
+from telebot.types import InputMediaPhoto
 import openai
 
 import settings
@@ -15,19 +16,16 @@ openai.api_key = settings.OPENAI_API_KEY
 
 @bot.message_handler(func=lambda message: True)
 def get_dalle(message):
-    
     try:
-
         response = openai.Image.create(
             prompt=message.text,
-            n=1,
-            size="1024x1024"
+            n=settings.MEDIA_SIZE,
+            size=settings.RESOLUTION_HIGH
         )
-        image_url = response['data'][0]['url']
-        bot.send_photo(
-            chat_id=message.chat.id, photo=image_url
-        )
-
+        image_urls = [response['data'][i]['url'] for i in range(settings.MEDIA_SIZE)]
+        media = [InputMediaPhoto(image) for image in image_urls]
+        bot.send_media_group(chat_id=message.chat.id, media=media)
+    
     except Exception as error:
         logger.error(error.args[0])
         bot.reply_to(
