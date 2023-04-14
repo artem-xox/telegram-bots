@@ -18,7 +18,7 @@ def get_codex(message):
     
     try:
         response = openai.Completion.create(
-            engine="code-davinci-001",
+            engine="code-davinci-002",
             prompt='"""\n{}\n"""'.format(message.text),
             temperature=0,
             max_tokens=1200,
