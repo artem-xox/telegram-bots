@@ -10,7 +10,19 @@
 from dataclasses import dataclass, field
 from typing import List, Dict
 
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 from app.content.prompts import Prompt, DefaultPrompt
+
+
+class Model:
+    GPT_3_5 = "gpt-3.5-turbo"
+    GPT_4 = "gpt-4"
+
+
+ActiveModels = [
+    Model.GPT_3_5, Model.GPT_4
+]
 
 
 class Role:
@@ -32,6 +44,7 @@ class Message:
 class Chat:
     messages: List[Message] = field(init=False, default_factory=list)
     prompt: Prompt = field(default=DefaultPrompt)
+    model: str = field(default=Model.GPT_3_5)
         
     def add(self, message: Message):
         self.messages.append(message)
@@ -52,9 +65,20 @@ class Chat:
     def status(self) -> Dict:
         return dict(
             prompt=self.prompt.name, 
-            messages=len(self.messages) - 1, 
+            messages=len(self.messages) - 1,
+            model=self.model,
             first=self.messages[1].text if len(self.messages) > 1 else "")
     
     def __post_init__(self):
         # setting default conversation prompt
         self.messages.append(Message(role=Role.SYSTEM, text=self.prompt.text))
+
+
+def model_markup():
+    markup = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton("GPT-3.5-turbo", callback_data=Model.GPT_3_5),
+            InlineKeyboardButton("GPT-4", callback_data=Model.GPT_4)
+        ]
+    ])
+    return markup

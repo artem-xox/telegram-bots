@@ -1,4 +1,4 @@
-from app.messages import Chat, Message, Role
+from app.messages import Chat, Message, Model, Role
 
 
 def test_empty_chat():
@@ -21,3 +21,4 @@ def test_chat():
     assert history.status['messages'] == 2
     assert history.status['first'] == init_message
     assert history.status['prompt'] == 'prompt_default'
+    assert history.status['model'] == Model.GPT_3_5

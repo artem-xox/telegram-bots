@@ -6,7 +6,7 @@ import openai
 from app.cache import SimpleCache
 from app.content.responses import Reply, print_error
 from app.content.prompts import PromptsMap, prompt_markup
-from app.messages import Chat, Message, Role
+from app.messages import Chat, Message, Role, ActiveModels, model_markup
 from app import settings
 
 
@@ -48,6 +48,11 @@ def prompt(message):
     bot.send_message(message.chat.id, Reply.prompt, reply_markup=prompt_markup())
 
 
+@bot.message_handler(commands=['model'])
+def prompt(message):
+    bot.send_message(message.chat.id, Reply.model, reply_markup=model_markup())
+
+
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     
@@ -55,9 +60,15 @@ def callback_query(call):
     if history is None:
         history = Chat()
     
-    prompt = PromptsMap[call.data]
-    bot.send_message(call.message.chat.id, prompt.message)
-    history.set_prompt(prompt)
+    if call.data in PromptsMap:
+        prompt = PromptsMap[call.data]
+        history.set_prompt(prompt)
+        bot.send_message(call.message.chat.id, prompt.message)
+    elif call.data in ActiveModels:
+        history.model = call.data
+        bot.send_message(call.message.chat.id, Reply.ok)
+    else:
+        pass
     
     cache.set(call.message.chat.id, history)
 
@@ -72,7 +83,7 @@ def chat(message):
 
     try:        
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model=history.model,
             messages=history.list
         )
         response_text = response["choices"][0]["message"]["content"]

@@ -6,8 +6,10 @@ class Emoji:
 
 
 class Reply:
+    ok = f'{Emoji.check} Done {Emoji.check}'
     help = f'{Emoji.cross} There is no help, lol {Emoji.cross}'
-    prompt = 'Choose one of available system prompts:'
+    prompt = 'Select one of available system prompts:'
+    model = 'Select one of available gpt models:'
     clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
     empty_dialog = f'{Emoji.check} Your have no active dialog {Emoji.check}'
 
