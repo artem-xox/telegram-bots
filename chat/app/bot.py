@@ -20,6 +20,11 @@ openai.api_key = settings.OPENAI_API_KEY
 cache = SimpleCache()
 
 
+@bot.message_handler(commands=['start'])
+def start(message):
+	bot.send_message(message.chat.id, Reply.welcome)
+
+
 @bot.message_handler(commands=['status'])
 def status(message):
     history = cache.get(message.chat.id)

@@ -3,9 +3,11 @@ class Emoji:
     cross = '\U00002716'
     check = '\U00002714'
     red_cross = '\U0000274C'
+    sparkles = '\U00002728'
 
 
 class Reply:
+    welcome = f'{Emoji.sparkles} Hello there {Emoji.sparkles}'
     ok = f'{Emoji.check} Done {Emoji.check}'
     help = f'{Emoji.cross} There is no help, lol {Emoji.cross}'
     prompt = 'Select one of available system prompts:'
