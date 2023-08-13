@@ -10,10 +10,11 @@ class Reply:
     welcome = f'{Emoji.sparkles} Hello there {Emoji.sparkles}'
     ok = f'{Emoji.check} Done {Emoji.check}'
     help = f'{Emoji.cross} There is no help, lol {Emoji.cross}'
-    prompt = 'Select one of available system prompts:'
-    model = 'Select one of available gpt models:'
+    prompt = f'{Emoji.check} Select one of available system prompts: {Emoji.check}'
+    model = f' {Emoji.check} Select one of available gpt models: {Emoji.check}'
     clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
-    empty_dialog = f'{Emoji.check} Your have no active dialog {Emoji.check}'
+    empty_dialog = f'{Emoji.check} You don\'t have any active dialogs {Emoji.check}'
+    restriction = f'{Emoji.cross} Hi! It looks like you are not allowed to use this bot! Have a nice day and fuck off :) {Emoji.cross}'
 
 
 def print_error(text_error: str) -> str:
