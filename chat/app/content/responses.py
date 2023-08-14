@@ -14,7 +14,7 @@ class Reply:
     model = f' {Emoji.check} Select one of available gpt models: {Emoji.check}'
     clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
     empty_dialog = f'{Emoji.check} You don\'t have any active dialogs {Emoji.check}'
-    restriction = f'{Emoji.cross} Hi! It looks like you are not allowed to use this bot! Have a nice day and fuck off :) {Emoji.cross}'
+    restriction = f'{Emoji.cross} Hi! It looks like you are not allowed to use this bot! Have a nice day :) {Emoji.cross}'
 
 
 def print_error(text_error: str) -> str:
