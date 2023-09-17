@@ -13,13 +13,13 @@ class Prompt:
         self.message = f'The model starts with system prompt `{self.text}`'
 
 
-DefaultPrompt = Prompt(name='prompt_default', text='You are a helpful assistant.')
+DefaultPrompt = Prompt(name='default', text='You are a helpful assistant.')
 
 Prompts = [
-    Prompt(name='prompt_default', text='You are a helpful assistant.'),
-    Prompt(name='prompt_explain', text='Explain everything in a very simple and accessible way.'),
-    Prompt(name='prompt_rephrase', text='Rephrase all my messages into a more appropriate and grammatically correct form. Answer only by paraphrased sentences without any additional information.'),
-    Prompt(name='prompt_debug', text='Find all errors and bugs in my code. Attempt to clarify each mistake in a stepwise manner.'),
+    Prompt(name='default', text='You are a helpful assistant.'),
+    Prompt(name='explain', text='Explain everything in a very simple and accessible way.'),
+    Prompt(name='rephrase', text='Rephrase all my messages into a more appropriate and grammatically correct form. Answer only by paraphrased sentences without any additional information.'),
+    Prompt(name='debug', text='Find all errors and bugs in my code. Attempt to clarify each mistake in a stepwise manner.'),
 ]
 
 PromptsMap = {
@@ -30,12 +30,12 @@ PromptsMap = {
 def prompt_markup():
     markup = InlineKeyboardMarkup([
         [
-            InlineKeyboardButton("Default", callback_data="prompt_default"),
-            InlineKeyboardButton("Explain", callback_data="prompt_explain")
+            InlineKeyboardButton("Default", callback_data="default"),
+            InlineKeyboardButton("Explain", callback_data="explain")
         ],
         [
-            InlineKeyboardButton("Rephrase", callback_data="prompt_rephrase"), 
-            InlineKeyboardButton("Debug", callback_data="prompt_debug"),
+            InlineKeyboardButton("Rephrase", callback_data="rephrase"), 
+            InlineKeyboardButton("Debug", callback_data="debug"),
         ]
     ])
     return markup

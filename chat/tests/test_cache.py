@@ -8,9 +8,10 @@ def test_cache():
 
     key = '123'
     message = 'HELLO'
+    tokens = {}
 
     history = Chat()
-    history.add(Message(role=Role.USER, text=message))
+    history.add(Message(role=Role.USER, text=message, tokens=tokens))
 
     cache.set(key=key, value=history)
     cached_history = cache.get(key=key)

@@ -35,6 +35,7 @@ class Role:
 class Message:
     text: str
     role: str
+    tokens: dict = field(default_factory=dict)
 
     def __dict__(self) -> Dict:
         return dict(role=self.role, content=self.text)
@@ -67,11 +68,12 @@ class Chat:
             prompt=self.prompt.name, 
             messages=len(self.messages) - 1,
             model=self.model,
-            first=self.messages[1].text if len(self.messages) > 1 else "")
+            first=cut_string(self.messages[1].text) if len(self.messages) > 1 else "",
+            tokens=self.messages[-1].tokens)
     
     def __post_init__(self):
         # setting default conversation prompt
-        self.messages.append(Message(role=Role.SYSTEM, text=self.prompt.text))
+        self.messages.append(Message(role=Role.SYSTEM, text=self.prompt.text, tokens={}))
 
 
 def model_markup():
@@ -82,3 +84,9 @@ def model_markup():
         ]
     ])
     return markup
+
+
+def cut_string(string):
+    if len(string) > 100:
+        string = string[:100] + "..."
+    return string

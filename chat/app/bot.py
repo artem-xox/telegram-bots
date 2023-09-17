@@ -1,3 +1,4 @@
+import json
 import logging
 from functools import wraps
 
@@ -53,7 +54,8 @@ def start(message):
 def status(message):
     history = cache.get(message.chat.id)
     if history:
-        bot.send_message(message.chat.id, text=str(history.status))
+        history_status_json = json.dumps(history.status, indent=4)
+        bot.send_message(message.chat.id, text=history_status_json)
     else:
         bot.send_message(message.chat.id, text=Reply.empty_dialog)
 
@@ -115,7 +117,7 @@ def chat(message):
     if history is None:
         history = Chat()
     
-    history.add(Message(role=Role.USER, text=message.text))
+    history.add(Message(role=Role.USER, text=message.text, tokens={}))
 
     try:        
         response = openai.ChatCompletion.create(
@@ -123,8 +125,9 @@ def chat(message):
             messages=history.list
         )
         response_text = response["choices"][0]["message"]["content"]
-        
-        history.add(Message(role=Role.ASSISTANT, text=response_text))
+        tokens_dict = response["usage"]
+
+        history.add(Message(role=Role.ASSISTANT, text=response_text, tokens=tokens_dict))
         bot.reply_to(message, text=response_text, parse_mode="Markdown")
         cache.set(message.chat.id, history)
 
