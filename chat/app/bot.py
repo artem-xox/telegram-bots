@@ -6,7 +6,7 @@ import telebot
 import openai
 
 from app.cache import SimpleCache
-from app.content.responses import Reply, print_error
+from app.content.responses import Reply, print_error, print_model
 from app.content.prompts import PromptsMap, prompt_markup
 from app.messages import Chat, Message, Role, ActiveModels, model_markup
 from app import settings
@@ -101,7 +101,7 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, prompt.message)
     elif call.data in ActiveModels:
         history.model = call.data
-        bot.send_message(call.message.chat.id, Reply.ok)
+        bot.send_message(call.message.chat.id, print_model(history.model), parse_mode="Markdown")
     else:
         pass
     

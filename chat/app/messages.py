@@ -17,11 +17,13 @@ from app.content.prompts import Prompt, DefaultPrompt
 
 class Model:
     GPT_3_5 = "gpt-3.5-turbo"
+    GPT_3_5_16k ="gpt-3.5-turbo-16k"
     GPT_4 = "gpt-4"
+    GPT_4_32k = "gpt-4-32k"
 
 
 ActiveModels = [
-    Model.GPT_3_5, Model.GPT_4
+    Model.GPT_3_5, Model.GPT_3_5_16k, Model.GPT_4, Model.GPT_4_32k
 ]
 
 
@@ -79,8 +81,12 @@ class Chat:
 def model_markup():
     markup = InlineKeyboardMarkup([
         [
-            InlineKeyboardButton("GPT-3.5-turbo", callback_data=Model.GPT_3_5),
-            InlineKeyboardButton("GPT-4", callback_data=Model.GPT_4)
+            InlineKeyboardButton("GPT-3.5", callback_data=Model.GPT_3_5),
+            InlineKeyboardButton("GPT-3.5-16k", callback_data=Model.GPT_3_5_16k),
+        ],
+        [
+            InlineKeyboardButton("GPT-4", callback_data=Model.GPT_4),
+            # InlineKeyboardButton("GPT-4-32k", callback_data=Model.GPT_4_32k),
         ]
     ])
     return markup

@@ -7,15 +7,18 @@ class Emoji:
 
 
 class Reply:
-    welcome = f'{Emoji.sparkles} Hello there {Emoji.sparkles}'
-    ok = f'{Emoji.check} Done {Emoji.check}'
-    help = f'{Emoji.cross} There is no help, lol {Emoji.cross}'
-    prompt = f'{Emoji.check} Select one of available system prompts: {Emoji.check}'
-    model = f' {Emoji.check} Select one of available gpt models: {Emoji.check}'
-    clear_dialog = f'{Emoji.check} Your current dialog has been cleared {Emoji.check}'
-    empty_dialog = f'{Emoji.check} You don\'t have any active dialogs {Emoji.check}'
-    restriction = f'{Emoji.cross} Hi! It looks like you are not allowed to use this bot! Have a nice day :) {Emoji.cross}'
+    welcome = f'{Emoji.sparkles} Hello there'
+    ok = f'{Emoji.check} Done'
+    help = f'{Emoji.cross} There is no help, lol'
+    prompt = f'{Emoji.check} Select one of available system prompts:'
+    model = f' {Emoji.check} Select one of available gpt models:'
+    clear_dialog = f'{Emoji.check} Your current dialog has been cleared'
+    empty_dialog = f'{Emoji.check} You don\'t have any active dialogs'
+    restriction = f'{Emoji.cross} Hi! It looks like you are not allowed to use this bot! Have a nice day :)'
 
 
 def print_error(text_error: str) -> str:
-    return f'{Emoji.red_cross} Error: {text_error} {Emoji.red_cross}'
+    return f'{Emoji.red_cross} Error: {text_error}'
+
+def print_model(model: str) -> str:
+    return f'{Emoji.check} Your current model is *{model}*'
