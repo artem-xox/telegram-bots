@@ -10,21 +10,8 @@
 from dataclasses import dataclass, field
 from typing import List, Dict
 
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-
 from app.content.prompts import Prompt, DefaultPrompt
-
-
-class Model:
-    GPT_3_5 = "gpt-3.5-turbo"
-    GPT_3_5_16k ="gpt-3.5-turbo-16k"
-    GPT_4 = "gpt-4"
-    GPT_4_32k = "gpt-4-32k"
-
-
-ActiveModels = [
-    Model.GPT_3_5, Model.GPT_3_5_16k, Model.GPT_4, Model.GPT_4_32k
-]
+from app.models import Model, GPT_3_5
 
 
 class Role:
@@ -47,7 +34,7 @@ class Message:
 class Chat:
     messages: List[Message] = field(init=False, default_factory=list)
     prompt: Prompt = field(default=DefaultPrompt)
-    model: str = field(default=Model.GPT_3_5)
+    model: Model = field(default=GPT_3_5)
         
     def add(self, message: Message):
         self.messages.append(message)
@@ -65,31 +52,33 @@ class Chat:
         return [message.__dict__() for message in self.messages]
 
     @property
+    def _tokens(self) -> dict:
+        return self.messages[-1].tokens if len(self.messages) > 1 else {}
+
+    @property
+    def _price(self) -> float:
+        price = self.model.price.input * self._tokens.get("prompt_tokens", 0) +\
+             self.model.price.output * (self._tokens.get("total_tokens", 0) - self._tokens.get("prompt_tokens", 0))
+        normalized_price = round(price / 1000, 4)
+        return normalized_price
+
+    @property
+    def _first(self) -> str:
+        return cut_string(self.messages[1].text) if len(self.messages) > 1 else ""
+
+    @property
     def status(self) -> Dict:
         return dict(
             prompt=self.prompt.name, 
             messages=len(self.messages) - 1,
-            model=self.model,
-            first=cut_string(self.messages[1].text) if len(self.messages) > 1 else "",
-            tokens=self.messages[-1].tokens)
+            model=self.model.name,
+            first=self._first,
+            tokens=self._tokens,
+            price=self._price)
     
     def __post_init__(self):
         # setting default conversation prompt
         self.messages.append(Message(role=Role.SYSTEM, text=self.prompt.text, tokens={}))
-
-
-def model_markup():
-    markup = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton("GPT-3.5", callback_data=Model.GPT_3_5),
-            InlineKeyboardButton("GPT-3.5-16k", callback_data=Model.GPT_3_5_16k),
-        ],
-        [
-            InlineKeyboardButton("GPT-4", callback_data=Model.GPT_4),
-            # InlineKeyboardButton("GPT-4-32k", callback_data=Model.GPT_4_32k),
-        ]
-    ])
-    return markup
 
 
 def cut_string(string):

@@ -8,7 +8,8 @@ import openai
 from app.cache import SimpleCache
 from app.content.responses import Reply, print_error, print_model
 from app.content.prompts import PromptsMap, prompt_markup
-from app.messages import Chat, Message, Role, ActiveModels, model_markup
+from app.messages import Chat, Message, Role
+from app.models import ActiveModels, model_markup
 from app import settings
 
 
@@ -99,9 +100,9 @@ def callback_query(call):
         prompt = PromptsMap[call.data]
         history.set_prompt(prompt)
         bot.send_message(call.message.chat.id, prompt.message)
-    elif call.data in ActiveModels:
-        history.model = call.data
-        bot.send_message(call.message.chat.id, print_model(history.model), parse_mode="Markdown")
+    elif call.data in ActiveModels.keys():
+        history.model = ActiveModels[call.data]
+        bot.send_message(call.message.chat.id, print_model(history.model.name), parse_mode="Markdown")
     else:
         pass
     
@@ -121,7 +122,7 @@ def chat(message):
 
     try:        
         response = openai.ChatCompletion.create(
-            model=history.model,
+            model=history.model.name,
             messages=history.list
         )
         response_text = response["choices"][0]["message"]["content"]
