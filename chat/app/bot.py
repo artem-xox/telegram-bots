@@ -53,11 +53,11 @@ def start(message):
 @restrict
 def status(message):
     history = cache.get(message.chat.id)
-    if history:
-        history_status_json = json.dumps(history.status, indent=4)
-        bot.send_message(message.chat.id, text=history_status_json)
-    else:
-        bot.send_message(message.chat.id, text=Reply.empty_dialog)
+    if history is None:
+        history = Chat()
+
+    history_status_json = json.dumps(history.status, indent=4)
+    bot.send_message(message.chat.id, text=history_status_json)
 
 
 @bot.message_handler(commands=['help'])
@@ -133,7 +133,12 @@ def chat(message):
 
     except Exception as error:
         logger.error(error)
-        bot.reply_to(message, text=print_error(error.args[0]))
+        try:
+            bot.reply_to(message, text=response_text, parse_mode="HTML")
+            cache.set(message.chat.id, history)
+        except Exception as error:
+            logger.error(error)
+            bot.reply_to(message, text=print_error(error.args[0]))
 
 
 bot.infinity_polling()
