@@ -11,4 +11,4 @@ RUN poetry install --no-dev
 WORKDIR /opt
 COPY ./app ./app/
 
-CMD ["poetry", "run", "python3", "app/bot.py"]
+CMD ["poetry", "run", "python3", "-m", "app.bot"]
