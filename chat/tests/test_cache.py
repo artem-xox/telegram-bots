@@ -3,11 +3,11 @@ from app.cache import SimpleCache
 
 
 def test_cache():
-    
+
     cache = SimpleCache()
 
-    key = '123'
-    message = 'HELLO'
+    key = "123"
+    message = "HELLO"
     tokens = {}
 
     history = Chat()

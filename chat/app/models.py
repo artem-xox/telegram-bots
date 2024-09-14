@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -15,42 +15,46 @@ class Model:
     price: Price
 
 
-GPT_3_5 = Model(
-    name="gpt-3.5-turbo", 
-    price=Price(
-        input=0.0015, 
-        output=0.002),
-    )
+GPT_4o_mini = Model(
+    name="gpt-4o-mini",
+    price=Price(input=0.03, output=0.06),
+)
 
-GPT_3_5_16k = Model(
-    name="gpt-3.5-turbo-16k", 
-    price=Price(
-        input=0.003, 
-        output=0.004),
-    )
+GPT_4o = Model(
+    name="gpt-4o",
+    price=Price(input=0.03, output=0.06),
+)
 
-GPT_4 = Model(
-    name="gpt-4", 
-    price=Price(
-        input=0.03, 
-        output=0.06),
-    )
+GPT_o1_mini = Model(
+    name="o1-mini",
+    price=Price(input=0.03, output=0.06),
+)
+
+GPT_o1_preview = Model(
+    name="o1-preview",
+    price=Price(input=0.03, output=0.06),
+)
+
 
 ActiveModels = {
-    GPT_3_5.name: GPT_3_5,
-    GPT_3_5_16k.name: GPT_3_5_16k,
-    GPT_4.name: GPT_4,
+    GPT_4o_mini.name: GPT_4o_mini,
+    GPT_4o.name: GPT_4o,
+    GPT_o1_mini.name: GPT_o1_mini,
+    GPT_o1_preview.name: GPT_o1_preview,
 }
 
 
 def model_markup():
-    markup = InlineKeyboardMarkup([
+    markup = InlineKeyboardMarkup(
         [
-            InlineKeyboardButton("GPT-3.5", callback_data=GPT_3_5.name),
-            InlineKeyboardButton("GPT-3.5-16k", callback_data=GPT_3_5_16k.name),
-        ],
-        [
-            InlineKeyboardButton("GPT-4", callback_data=GPT_4.name),
+            [
+                InlineKeyboardButton(GPT_4o_mini.name, callback_data=GPT_4o_mini.name),
+                InlineKeyboardButton(GPT_4o.name, callback_data=GPT_4o.name),
+            ],
+            [
+                InlineKeyboardButton(GPT_o1_mini.name, callback_data=GPT_o1_mini.name),
+                InlineKeyboardButton(GPT_o1_preview.name, callback_data=GPT_o1_preview.name),
+            ],
         ]
-    ])
+    )
     return markup

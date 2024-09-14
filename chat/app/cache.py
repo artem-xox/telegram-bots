@@ -5,7 +5,6 @@ from app.messages import Chat
 
 
 class BaseCache:
-
     def get(self, key) -> Optional[Chat]:
         raise NotImplemented()
 
@@ -14,10 +13,9 @@ class BaseCache:
 
 
 class SimpleCache(BaseCache):
-
     def __init__(self):
         self.cache = MRUCache(maxsize=1_000)
-    
+
     def get(self, key) -> Optional[Chat]:
         return self.cache.get(key)
 
